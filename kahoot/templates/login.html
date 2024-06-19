@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>Quiz Template</title>
+    <link rel="stylesheet" type="text/css" href="/static/index.css">
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+    <div class="quiz-page-template-container">
+        <div class="quiz-header-container">
+            <div class="quiz-name-text-container">
+                <span class="quiz-name-text"><a href="/">TRX Quiz</a></span>
+            </div>
+            <div class="page-header-button-container">
+                <button class="page-header-button" onclick="window.location='/register'">
+                    Register
+                </button>
+                <button class="page-header-button" onclick="window.location='/login'">
+                    Login
+                </button>
+            </div>
+        </div>
+        <div class="quiz-main-page" id="quiz-main-page">
+            <h1>Login</h1>
+            <div class="quiz-question-container" id="quiz-question-container">
+                <form action="/login" method="POST" class="logon-form">
+                    <input type="text" name="username" placeholder="Username" />
+                    <input type="password" name="password" placeholder="Password" />
+                    <button class="page-header-button" type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+        {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flashes">
+      {% for message in messages %}
+          <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+    </div>
+    <script type="text/javascript" src="/static/fetch-wrapper.js"></script>
+</body>
+
+</html>

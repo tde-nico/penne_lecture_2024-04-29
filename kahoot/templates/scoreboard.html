@@ -1,0 +1,108 @@
+<html>
+<head>
+    <title>Quiz Template</title>
+    <link rel="stylesheet" type="text/css" href="/static/index.css">
+    <style type="text/css">
+    table {
+    border-collapse: collapse;
+    margin: 25px auto;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+table th, table td {
+    padding: 12px 15px;
+}
+table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+    /* Progress Bar styles */
+    .progress-bar-container1 {
+        width: 100%;
+        background-color: #ddd;
+        padding: 3px;
+        border-radius: 5px;
+        margin: 20px 0;
+    }
+    .progress-bar1 {
+        height: 20px;
+        background-color: #009879;
+        text-align: center;
+        line-height: 20px;
+        color: white;
+        border-radius: 3px;
+    }
+    </style>
+</head>
+<body>
+    <div class="quiz-page-template-container">
+        <div class="quiz-header-container">
+            <div class="quiz-name-text-container">
+                <span class="quiz-name-text"><a href="/">TRX Quiz</a></span>
+            </div>
+            <div class="page-header-button-container">
+                <button class="page-header-button" onclick="window.location='/quiz'">Quiz</button>
+                <button class="page-header-button" onclick="window.location='/logout'">Logout</button>
+            </div>
+        </div>
+        <div class="quiz-main-page" id="quiz-main-page">
+            <h1>Scoreboard</h1>
+            <!-- Progress Bar HTML -->
+            <div class="progress-bar-container1">
+                <div class="progress-bar1" id="progress-bar" style="width: 0%;">Time Remaining</div>
+            </div>
+            <table>
+                <thead><tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                </tr></thead>
+                <tbody>{% for i, user in scores %}
+                    {% if user['username'] != "admin" %}<tr>
+                        <td>{{i}}°</td>
+                        <td>{{user['username']}}</td>
+                        <td>{{user['current_score']}}</td>
+                    </tr>{% endif %}
+                {% endfor %}</tbody>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/fetch-wrapper.js"></script>
+    <script>
+    // Assuming time_remaining is the total time in seconds
+    let totalTime = 30; // Ensure this is passed from your backend
+    let timeLeft = {{ time_remaining }};
+
+    function updateProgressBar() {
+        let percentage = (timeLeft / (totalTime)) * 100;
+        document.getElementById('progress-bar').style.width = percentage + '%';
+        document.getElementById('progress-bar').innerText = Math.round(timeLeft) + ' seconds remaining';
+
+        if (timeLeft > 0) {
+            setTimeout(updateProgressBar, 1000);
+            timeLeft--;
+        }
+    }
+    updateProgressBar();
+
+    </script>
+    <script> setTimeout(function() {window.location.reload();}, 3000);  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchQuestions();
+        });
+
+        function fetchQuestions() {
+            fetch('/list_all')
+                .then(response => response.json())
+                .then(data => {
+                    displayQuestions(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function displayQuestions(questions) {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = ''; // Clear previous content
+            questions.forEach(question => {
+                const qElement = document.createElement('div');
+                qElement.innerHTML = `
+                    <p>${question.question} (Status: ${question.show ? 'Open' : 'Closed'})</p>
+                    <button onclick="changeQuestionStatus(${question.id}, ${!question.show})">
+                        ${question.show ? 'Close' : 'Open'}
+                    </button>
+                `;
+                container.appendChild(qElement);
+            });
+        }
+
+        function changeQuestionStatus(questionId, open) {
+            const endpoint = open ? '/open_question' : '/close_question';
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `question_id=${questionId}`
+            })
+            .then(response => {
+                if (response.ok) fetchQuestions(); // Refresh the list
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <div id="questions-container"></div>
+</body>
+</html>

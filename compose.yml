@@ -1,0 +1,43 @@
+
+services:
+  kahoot:
+    build: ./kahoot/
+    restart: unless-stopped
+    ports:
+      - 5070:1337
+
+  goldino:
+    build: ./goldino/
+    restart: unless-stopped
+    environment:
+      FLAG: flag{ponn_la_capital_d_lu_monn}
+    ports:
+      - 5071:5071
+
+  # kahoot2:
+  #   build: ./kahoot_2/
+  #   restart: unless-stopped
+  #   ports:
+  #     - 5072:1337
+
+  cookie:
+    build: ./cookie/
+    restart: unless-stopped
+    ports:
+      - 5073:1337
+
+  # goldino2:
+  #   build: ./goldino2/
+  #   restart: unless-stopped
+  #   environment:
+  #     FLAG: flag{ponn_la_capital_d_lu_monn}
+  #   ports:
+  #     - 5074:5074
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.201.3.0/24
+         gateway: 10.201.3.1

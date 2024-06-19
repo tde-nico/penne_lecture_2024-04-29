@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>Quiz Template</title>
+    <link rel="stylesheet" type="text/css" href="/static/index.css">
+</head>
+
+<body>
+    <div class="quiz-page-template-container">
+        <div class="quiz-header-container">
+            <div class="quiz-name-text-container">
+                <span class="quiz-name-text">TRX Quiz</span>
+            </div>
+            <div class="page-header-button-container">
+                <button class="page-header-button" onclick="window.location='/scoreboard'">
+                    Scoreboard
+                </button>
+                <button class="page-header-button" onclick="window.location='/logout'">
+                    Logout
+                </button>
+            </div>
+        </div>
+        <div class="quiz-main-page" id="quiz-main-page">
+            <div class="quiz-question-container" id="quiz-question-container">
+                <div class="quiz-question-text-container" id="quiz-question-text-container">
+                </div>
+                <div class="quiz-answer-text-container" id="quiz-answer-text-container">
+                    <ul class="quiz-answer-list" id="quiz-answer-list">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/fetch-wrapper.js"></script>
+    <script type="text/javascript" src="/static/quiz.js"></script>
+</body>
+
+</html>
